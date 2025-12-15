@@ -2,7 +2,7 @@ torch
 transformers
 streamlit
 pandas
-praw
 scikit-learn
 plotly
 accelerate
+safetensors
