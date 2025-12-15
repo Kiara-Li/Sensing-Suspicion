@@ -18,7 +18,7 @@ st.set_page_config(
 
 @st.cache_resource
 def load_model():
-    # 你的训练模型地址
+    # 训练模型地址
     model_path = "KiaraLi2025/creepy-roberta"
     
     st.write(f"Loading model from Hugging Face: {model_path} ...")
@@ -68,6 +68,10 @@ with st.sidebar:
     st.write("---")
     st.write("**Accuracy:** 95.2%")
     st.write("**Status:** Trained & Ready")
+    st.write(
+    "**Model on Hugging Face:** "
+    "[KiaraLi2025/creepy-roberta](https://huggingface.co/KiaraLi2025/creepy-roberta/tree/main)"
+)
 
 # 主界面布局
 col1, col2 = st.columns([1, 1])
