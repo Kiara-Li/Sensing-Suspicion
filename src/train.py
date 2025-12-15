@@ -8,13 +8,12 @@ from transformers import RobertaTokenizer, RobertaForSequenceClassification, Tra
 from preprocess import clean_text
 import os
 
-# Mac M1/M2/M3 优化配置
+# Mac
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 def compute_metrics(p):
     """
     计算评估指标：准确率、召回率、F1分数
-    让我们可以直观看到模型是不是在变聪明
     """
     pred, labels = p
     pred = np.argmax(pred, axis=1)
@@ -54,7 +53,7 @@ def train_model():
     tokenizer = RobertaTokenizer.from_pretrained(model_name)
 
     def tokenize_function(texts):
-        # max_length 设为 256 或 512。如果不缺显存/内存，设为 512 效果最好
+        # max_length 设为 256 或 512
         return tokenizer(texts, padding="max_length", truncation=True, max_length=256)
 
     train_encodings = tokenize_function(train_texts)
@@ -80,13 +79,13 @@ def train_model():
     # 3. 加载模型
     model = RobertaForSequenceClassification.from_pretrained(model_name, num_labels=2)
 
-    # 4. 训练参数 (已针对 Mac 和新数据优化)
+    # 4. 训练参数设置
     training_args = TrainingArguments(
         output_dir='./results',
-        num_train_epochs=4,              # 增加轮数，让模型学透
-        per_device_train_batch_size=8,   # 如果内存报错，改小成 4
+        num_train_epochs=4,              # 增加轮数
+        per_device_train_batch_size=8,   
         per_device_eval_batch_size=8,
-        learning_rate=2e-5,              # 这是一个比较稳健的学习率
+        learning_rate=2e-5,              # 适中学习率
         warmup_steps=100,                # 热身步数
         weight_decay=0.01,
         logging_dir='./logs',
@@ -96,7 +95,7 @@ def train_model():
         eval_strategy="epoch",           
         save_strategy="epoch",
         
-        # 关键：加载最好的模型，而不是最后一步的模型
+        # 关键：加载最好的模型
         load_best_model_at_end=True,     
         metric_for_best_model="accuracy" 
     )
