@@ -18,18 +18,21 @@ st.set_page_config(
 
 @st.cache_resource
 def load_model():
-    # hugging face model ID
-    model_path = "KiaraLi2025/creepy-roberta" 
+    # 你的训练模型地址
+    model_path = "KiaraLi2025/creepy-roberta"
     
-    st.write(f"Loading model from Hugging Face: {model_path} ...") 
+    st.write(f"Loading model from Hugging Face: {model_path} ...")
     
     try:
-        # 使用 AutoTokenizer 和 AutoModel，它们容错率更高，能自动适配
-        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        # 1. 分词器：直接用官方原版的 'roberta-base' 
+        tokenizer = AutoTokenizer.from_pretrained("roberta-base")
+        
+        # 2. 模型
         model = AutoModelForSequenceClassification.from_pretrained(model_path)
+        
         return tokenizer, model
     except Exception as e:
-        st.error(f"Model loading failed!\nError message: {e}")
+        st.error(f"Model loading failed! Please check whether the Hugging Face ID is correct.\nError message: {e}")
         return None, None
 
 def get_prediction_score(text, tokenizer, model):
