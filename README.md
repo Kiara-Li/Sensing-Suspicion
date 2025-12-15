@@ -1,4 +1,3 @@
-# creepy_detector
 # 🕵️‍♀️ Sensing Suspicion
 
 **Quantifying Intuition.** A Neural Network for detecting "creepy signals" in everyday narratives.
