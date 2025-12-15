@@ -84,7 +84,7 @@ with col1:
         placeholder="It was late at night, and I was walking home alone..."
     )
     
-    analyze_btn = st.button("🔍 Analyze for Suspicion", type="primary")
+    analyze_btn = st.button("Analyze for Suspicion", type="primary")
 
 if analyze_btn and user_input: # 只要有输入就尝试运行，模型加载失败会在上面报错
     if tokenizer is None or model is None:
