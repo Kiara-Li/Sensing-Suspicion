@@ -18,14 +18,21 @@ st.set_page_config(
 
 @st.cache_resource
 def load_model():
-    """加载我们刚刚训练好的模型"""
-    model_path = "models/creepy_roberta"
+    # --- 修改前 (本地路径) ---
+    # model_path = "models/creepy_roberta"
+    
+    # --- 修改后 (Hugging Face ID) ---
+    # 请把下面的 "你的HF用户名/模型名" 换成你刚才创建的真实 ID
+    model_path = "KiaraLi2025/creepy-roberta" 
+    
+    st.write(f"Loading model from Hugging Face: {model_path} ...") # 加个提示让我们知道它在工作
+    
     try:
         tokenizer = RobertaTokenizer.from_pretrained(model_path)
         model = RobertaForSequenceClassification.from_pretrained(model_path)
         return tokenizer, model
     except Exception as e:
-        st.error(f"模型加载失败！请检查路径 'models/creepy_roberta' 是否存在。\n错误信息: {e}")
+        st.error(f"Model loading failed!\nError message: {e}")
         return None, None
 
 def get_prediction_score(text, tokenizer, model):
